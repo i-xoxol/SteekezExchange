@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import steekezexchange.yaid.com.steekezexchange.R;
+import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
 
 /**
  * Created by Игорь on 13.05.2015.
@@ -17,9 +18,9 @@ import steekezexchange.yaid.com.steekezexchange.R;
 public class FriendsListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private List<String> friendsList;
+    private List<FriendItem> friendsList;
 
-    public FriendsListAdapter(Context ctx, List<String> friends)
+    public FriendsListAdapter(Context ctx, List<FriendItem> friends)
     {
         this.inflater = LayoutInflater.from(ctx);
         this.friendsList = friends;
@@ -56,7 +57,7 @@ public class FriendsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
-        String name = friendsList.get(position);
+        String name = friendsList.get(position).getEmail();
         if(name!=null)
             viewHolder.tvName.setText(name);
 
