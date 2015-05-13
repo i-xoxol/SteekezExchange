@@ -1,6 +1,9 @@
 package steekezexchange.yaid.com.steekezexchange.ui;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import steekezexchange.yaid.com.steekezexchange.R;
-import steekezexchange.yaid.com.steekezexchange.adapters.ScreenSlidePagerAdapter;
-
 
 public class MainActivity extends Activity {
+
+    private static final String MY_COL_FRAGMENT_TAG = "MY_COL_FRAGMENT_TAG";
+    private static final String FRIEND_LIST_FRAGMENT_TAG = "FRIEND_LIST_FRAGMENT_TAG";
 
     final private static int NUM_PAGES = 2;
     private ViewPager mPager;
@@ -40,7 +44,7 @@ public class MainActivity extends Activity {
         page = this.getLayoutInflater().inflate(R.layout.fragment_friends_list, (ViewGroup) getWindow().findViewById(android.R.id.content),false);
         pages.add(page);
 
-        mPagerAdapter = new ScreenSlidePagerAdapter(pages,this);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(pageChangeListener);
 
@@ -106,5 +110,51 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+
+        FragmentManager fm;
+
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fm=fm;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            if(position==0)
+            {
+                fragment = (MyCollectionFragment)fm.findFragmentByTag(MY_COL_FRAGMENT_TAG);
+                if(fragment==null)
+                    fragment = new MyCollectionFragment();
+            }
+            else if (position == 1)
+            {
+                fragment = (FriendsListFragment)fm.findFragmentByTag(FRIEND_LIST_FRAGMENT_TAG);
+                if(fragment==null)
+                    fragment = new FriendsListFragment();
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position) {
+                case 0:
+                    return MainActivity.this.getString(R.string.tab_one);
+                case 1:
+                    return MainActivity.this.getString(R.string.tab_two);
+            }
+            return null;
+        }
+
     }
 }
