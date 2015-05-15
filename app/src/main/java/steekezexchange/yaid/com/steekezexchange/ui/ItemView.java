@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import steekezexchange.yaid.com.steekezexchange.R;
+import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 
 /**
  * Created by ikhokhlov on 5/14/2015.
@@ -21,6 +22,7 @@ public class ItemView extends LinearLayout {
     private TextView tvName, tvQuant, tvNum;
     private int num,quantity;
     private String name;
+    private SteekezItem item;
 
     private int size = 0;
 
@@ -46,6 +48,12 @@ public class ItemView extends LinearLayout {
         tvQuant = (TextView)findViewById(R.id.tvQuantity);
         tvNum = (TextView)findViewById(R.id.tvNum);
         ivItem = (ImageView)findViewById(R.id.ivItem);
+    }
+
+    public ItemView (Context context, int size, int image, SteekezItem item)
+    {
+        this(context,size,0,image,item.getName(),item.getId(),item.getQuantity());
+        this.item = item;
     }
 
     public ItemView (Context context, int size, int margins, int image, String name, int num, int quantity) {
@@ -80,7 +88,6 @@ public class ItemView extends LinearLayout {
 
     }
 
-
     public int getNum() {
         return num;
     }
@@ -110,5 +117,13 @@ public class ItemView extends LinearLayout {
     public void setName(String name) {
         this.name = name;
         tvNum.setText(num);
+    }
+
+    public SteekezItem getItem() {
+        return item;
+    }
+
+    public void setItem(SteekezItem item) {
+        this.item = item;
     }
 }
