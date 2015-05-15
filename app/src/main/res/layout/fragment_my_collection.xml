@@ -1,10 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    tools:context=".MainActivity"
-    android:background="@drawable/gradient">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    android:fillViewport="true"
+        android:id="@+id/scrollView" >
+
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingLeft="16dp"
+android:paddingRight="16dp"
+tools:context=".MainActivity"
+android:background="@drawable/gradient">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -16,12 +23,10 @@
         android:id="@+id/linearLayout">
 
 
-        <include
-            android:id="@+id/item1"
+        <Space
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            layout="@layout/item_layout" />
+            android:layout_height="match_parent" />
 
         <ImageView
             android:layout_width="0dp"
@@ -31,12 +36,10 @@
             android:id="@+id/imageView"
             android:src="@drawable/logo" />
 
-        <include
-            android:id="@+id/item2"
+        <Space
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            layout="@layout/item_layout" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -48,30 +51,23 @@
         android:id="@+id/imageView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/scrollView"
+        android:layout_alignBottom="@+id/myGridLO"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout"
         android:layout_below="@+id/linearLayout"
         android:src="@drawable/new_background" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <GridLayout
+        android:id="@+id/myGridLO"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:fillViewport="true">
+        android:animateLayoutChanges="true">
+    </GridLayout>
 
-        <GridLayout
-            android:id="@+id/myGridLO"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
 
-        </GridLayout>
-
-    </ScrollView>
 
     <!--
           <ImageView
@@ -88,3 +84,4 @@
 -->
 
 </RelativeLayout>
+</ScrollView>

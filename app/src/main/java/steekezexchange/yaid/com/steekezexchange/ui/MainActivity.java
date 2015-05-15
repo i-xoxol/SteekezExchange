@@ -3,16 +3,11 @@ package steekezexchange.yaid.com.steekezexchange.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import steekezexchange.yaid.com.steekezexchange.R;
 
@@ -24,7 +19,6 @@ public class MainActivity extends Activity {
     final private static int NUM_PAGES = 2;
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
-    List<View> pages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +32,6 @@ public class MainActivity extends Activity {
     private void initViews()
     {
         mPager = (ViewPager) findViewById(R.id.pager);
-        pages = new ArrayList<View>();
-        View page = this.getLayoutInflater().inflate(R.layout.fragment_my_collection, (ViewGroup) getWindow().findViewById(android.R.id.content),false);
-        pages.add(page);
-        page = this.getLayoutInflater().inflate(R.layout.fragment_friends_list, (ViewGroup) getWindow().findViewById(android.R.id.content),false);
-        pages.add(page);
-
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(pageChangeListener);
