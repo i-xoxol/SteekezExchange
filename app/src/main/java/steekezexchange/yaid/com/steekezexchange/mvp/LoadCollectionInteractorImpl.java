@@ -14,45 +14,38 @@ import steekezexchange.yaid.com.steekezexchange.utils.Parser;
 /**
  * Created by Игорь on 16.05.2015.
  */
-public class LoadDataInteractorImpl implements LoadDataInteractor{
-    private Context ctx;
+public class LoadCollectionInteractorImpl implements LoadCollectionInteractor{
 
-    public LoadDataInteractorImpl(Context ctx) {
+    private Context ctx;
+    private String ownerName;
+
+    public LoadCollectionInteractorImpl(Context ctx, String ownerName) {
         this.ctx = ctx;
+        this.ownerName = ownerName;
     }
 
     @Override
-    public void loadItemsFromInternalStorage(final DataFinishedListener listener) {
+    public void loadItemsFromInternalStorage(String name, final CollectionFinishedListener listener) {
+        Thread loadThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final ArrayList<SteekezItem> friendColletion = loadCollection(ownerName);
 
-       Thread loadThread = new Thread(new Runnable() {
-           @Override
-           public void run() {
-               final ArrayList<SteekezItem> myColletion = loadCollection();
-/*
-               try {
-                   Thread.sleep(2000);
-               } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
-*/
-               final ArrayList<FriendItem> friendsList = FileHelper.getFriendsList(ctx);
-
-               ((Activity) ctx).runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       listener.onFinished(FileHelper.MY_COLLECTION, myColletion, friendsList);
-                   }
-               });
-           }
-       });
+                ((Activity) ctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onFinished(friendColletion);
+                    }
+                });
+            }
+        });
 
         loadThread.start();
-
     }
 
-    private ArrayList<SteekezItem> loadCollection()
+    private ArrayList<SteekezItem> loadCollection(String name)
     {
-        String myData = FileHelper.readMyCollectionFile(ctx);
+        String myData = FileHelper.readCollectionFile(ctx,name);
         ArrayList<SteekezItem> steekezArray = null;
 
         if (myData==null || myData.length()==0)
@@ -69,3 +62,4 @@ public class LoadDataInteractorImpl implements LoadDataInteractor{
         return steekezArray;
     }
 }
+

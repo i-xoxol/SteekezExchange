@@ -98,6 +98,17 @@ public class FileHelper {
             return null;
     }
 
+    public static final String readCollectionFile(Context ctx, String name)
+    {
+        File dir = getStorageDir(ctx);
+        File myCollectionFile = new File(dir,name);
+
+        if (myCollectionFile.exists())
+            return readFile(myCollectionFile);
+        else
+            return null;
+    }
+
     public static final boolean writeFile(Context ctx, String fileName, String dataToWrite)
     {
         File dir = getStorageDir(ctx);

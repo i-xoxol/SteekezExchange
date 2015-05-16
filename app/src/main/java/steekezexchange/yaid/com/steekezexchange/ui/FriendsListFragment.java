@@ -72,8 +72,17 @@ public class FriendsListFragment extends Fragment {
         FriendsListAdapter adapter = new FriendsListAdapter(getActivity(),friendsList);
         lvFriends.setAdapter(adapter);
         registerForContextMenu(lvFriends);
+        lvFriends.setOnItemClickListener(lvItemClick);
 
     }
+
+    AdapterView.OnItemClickListener lvItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            FriendItem item = (FriendItem) ((FriendsListAdapter)parent.getAdapter()).getItem(position);
+            onItemsEvents.friendOpen(item.getEmail());
+        }
+    };
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -112,7 +121,8 @@ public class FriendsListFragment extends Fragment {
 
     public void showList()
     {
-        ((FriendsListAdapter)lvFriends.getAdapter()).notifyDataSetChanged();
+        //((FriendsListAdapter)lvFriends.getAdapter()).notifyDataSetChanged();
+        lvFriends.setAdapter(new FriendsListAdapter(getActivity(),friendsList));
     }
 
     private void testFriends(){

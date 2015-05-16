@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
 
     private static final String MY_COL_FRAGMENT_TAG = "MY_COL_FRAGMENT_TAG";
     private static final String FRIEND_LIST_FRAGMENT_TAG = "FRIEND_LIST_FRAGMENT_TAG";
+    private final static int FRIEND_COLLECTION_ACT_CODE = 1;
 
     final private static int NUM_PAGES = 2;
     private ViewPager mPager;
@@ -195,7 +197,9 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
 
     @Override
     public void friendOpen(String name) {
-
+        Intent intent = new Intent(this,FriendCollectionActivity.class);
+        intent.putExtra(FriendCollectionActivity.NAME_KEY,name);
+        startActivityForResult(intent,FRIEND_COLLECTION_ACT_CODE);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
@@ -256,7 +260,7 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
 
                 ArrayList<FriendItem> friendsList = (ArrayList<FriendItem>) friendsListFragment.getFriendsList();
                 friendsList.add(new FriendItem(value));
-                FileHelper.writeFile(MainActivity.this, value, "jjj");
+                FileHelper.writeFile(MainActivity.this, value, "");
                 friendsListFragment.prepareData(friendsList);
                 friendsListFragment.showList();
             }
