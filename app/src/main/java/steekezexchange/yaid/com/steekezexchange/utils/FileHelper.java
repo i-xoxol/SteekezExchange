@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
+import steekezexchange.yaid.com.steekezexchange.ui.MainActivity;
 
 /**
  * Created by Игорь on 15.05.2015.
@@ -119,5 +120,12 @@ public class FileHelper {
 
     public static final boolean writeMyCollection(Context ctx, String dataToWrite){
         return writeFile(ctx,MY_COLLECTION,dataToWrite);
+    }
+
+    public final static boolean deleteFile(Context ctx, String name)
+    {
+        File dir = getStorageDir(ctx);
+        File fileToDel = new File(dir,name);
+        return fileToDel.delete();
     }
 }

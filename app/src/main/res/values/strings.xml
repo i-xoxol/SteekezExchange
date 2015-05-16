@@ -13,5 +13,6 @@
     <string name="add_dialog_message">Введіть його пошту</string>
     <string name="add_dialog_but_add">ДОДАТИ</string>
     <string name="add_dialog_but_cancel">ВІДМІНА</string>
+    <string name="friends_list_delete_context">Видалити</string>
 
 </resources>

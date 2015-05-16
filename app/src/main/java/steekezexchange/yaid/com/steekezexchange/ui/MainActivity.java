@@ -28,7 +28,7 @@ import steekezexchange.yaid.com.steekezexchange.mvp.MainView;
 import steekezexchange.yaid.com.steekezexchange.utils.FileHelper;
 import steekezexchange.yaid.com.steekezexchange.utils.Parser;
 
-public class MainActivity extends Activity implements CollectionFragment.SaveDataListener, MainView{
+public class MainActivity extends Activity implements CollectionFragment.SaveDataListener, MainView, FriendsListFragment.OnFriendItemsEvents{
 
     private static final String MY_COL_FRAGMENT_TAG = "MY_COL_FRAGMENT_TAG";
     private static final String FRIEND_LIST_FRAGMENT_TAG = "FRIEND_LIST_FRAGMENT_TAG";
@@ -181,6 +181,20 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
             if(friendsListFragment.isAdded())
                 friendsListFragment.showList();
         }
+
+    }
+
+    @Override
+    public void deleteFriend(String name) {
+        ArrayList<FriendItem> friendsList = (ArrayList<FriendItem>) friendsListFragment.getFriendsList();
+        friendsList.remove(new FriendItem(name));
+        FileHelper.deleteFile(MainActivity.this, name);
+        friendsListFragment.prepareData(friendsList);
+        friendsListFragment.showList();
+    }
+
+    @Override
+    public void friendOpen(String name) {
 
     }
 
