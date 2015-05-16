@@ -5,5 +5,5 @@ package steekezexchange.yaid.com.steekezexchange.mvp;
  */
 public interface CollectionPresenter {
     public void onLoad();
-    public void onItemClicked(int position);
+    //public void onItemClicked(int position);
 }

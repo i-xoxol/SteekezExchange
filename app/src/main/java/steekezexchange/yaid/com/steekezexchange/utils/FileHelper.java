@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class FileHelper {
 
     private static final String DIRNAME = "SteekezExchangeData";
-    private static final String MY_COLLECTION = "_myCollection";
+    public static final String MY_COLLECTION = "_myCollection";
 
     static public File getStorageDir(Context ctx){
 

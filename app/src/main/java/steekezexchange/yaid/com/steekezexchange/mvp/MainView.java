@@ -8,11 +8,11 @@ import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 /**
  * Created by ikhokhlov on 5/14/2015.
  */
-public interface CollectionView {
+public interface MainView {
 
     public void showProgress();
 
     public void hideProgress();
 
-    public void setItems(List<SteekezItem> items);
+    public void setItems(String collectionName, List<SteekezItem> myCollection, List<FriendItem> items);
 }

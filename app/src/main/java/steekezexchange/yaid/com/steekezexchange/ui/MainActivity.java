@@ -8,10 +8,23 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import steekezexchange.yaid.com.steekezexchange.R;
+import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
+import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
+import steekezexchange.yaid.com.steekezexchange.mvp.CollectionPresenter;
+import steekezexchange.yaid.com.steekezexchange.mvp.CollectionView;
+import steekezexchange.yaid.com.steekezexchange.mvp.DataPresenterImpl;
+import steekezexchange.yaid.com.steekezexchange.mvp.MainView;
+import steekezexchange.yaid.com.steekezexchange.utils.FileHelper;
+import steekezexchange.yaid.com.steekezexchange.utils.Parser;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements CollectionFragment.SaveDataListener, MainView{
 
     private static final String MY_COL_FRAGMENT_TAG = "MY_COL_FRAGMENT_TAG";
     private static final String FRIEND_LIST_FRAGMENT_TAG = "FRIEND_LIST_FRAGMENT_TAG";
@@ -19,15 +32,32 @@ public class MainActivity extends Activity {
     final private static int NUM_PAGES = 2;
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
+    private ProgressBar progressBar;
+    private CollectionPresenter dataPresenter;
+    private CollectionFragment collectionFragment;
+    private FriendsListFragment friendsListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        prepareFragments();
         initViews();
+        dataPresenter = new DataPresenterImpl(this,this);
 
     }
+
+    private void prepareFragments()
+    {
+        FragmentManager fm = getFragmentManager();
+        collectionFragment = (CollectionFragment)fm.findFragmentByTag(MY_COL_FRAGMENT_TAG);
+        if(collectionFragment==null)
+            collectionFragment = new CollectionFragment();
+        friendsListFragment = (FriendsListFragment)fm.findFragmentByTag(FRIEND_LIST_FRAGMENT_TAG);
+        if(friendsListFragment==null)
+            friendsListFragment = new FriendsListFragment();
+    }
+
 
     private void initViews()
     {
@@ -35,6 +65,7 @@ public class MainActivity extends Activity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(pageChangeListener);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
     }
     @Override
@@ -65,6 +96,12 @@ public class MainActivity extends Activity {
 
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dataPresenter.onLoad();
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -100,30 +137,55 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void saveData(String collectionName, ArrayList<SteekezItem> collection) {
+        if(collection!=null)
+            FileHelper.writeMyCollection(this, Parser.getStringData(collectionName, collection));
+    }
+
+    @Override
+    public void showProgress() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        mPager.setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+        mPager.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setItems(String collectionName, List<SteekezItem> myCollection, List<FriendItem> items) {
+        //FragmentManager fm = getFragmentManager();
+        //CollectionFragment collectionFragment = (CollectionFragment) fm.findFragmentByTag(MY_COL_FRAGMENT_TAG);
+        if(collectionFragment!=null)
+            if (collectionFragment.isAdded())
+                collectionFragment.showCollection(collectionName, (ArrayList<SteekezItem>) myCollection);
+            else
+                collectionFragment.prepareData(collectionName,(ArrayList<SteekezItem>) myCollection);
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
-        FragmentManager fm;
+        //FragmentManager fm;
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
-            this.fm=fm;
+            //this.fm=fm;
         }
 
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
+
             if(position==0)
-            {
-                fragment = (MyCollectionFragment)fm.findFragmentByTag(MY_COL_FRAGMENT_TAG);
-                if(fragment==null)
-                    fragment = new MyCollectionFragment();
-            }
+                fragment = collectionFragment;
             else if (position == 1)
-            {
-                fragment = (FriendsListFragment)fm.findFragmentByTag(FRIEND_LIST_FRAGMENT_TAG);
-                if(fragment==null)
-                    fragment = new FriendsListFragment();
-            }
+                fragment = friendsListFragment;
+
             return fragment;
         }
 
