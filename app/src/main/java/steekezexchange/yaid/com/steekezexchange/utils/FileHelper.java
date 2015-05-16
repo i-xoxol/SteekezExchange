@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
+
 /**
  * Created by Игорь on 15.05.2015.
  */
@@ -45,6 +47,22 @@ public class FileHelper {
         }
 
         return  records;
+    }
+
+    public static ArrayList<FriendItem> getFriendsList(Context ctx)
+    {
+        File f = getStorageDir(ctx);
+        File[] files = f.listFiles();
+
+        ArrayList<FriendItem> friendsList = new ArrayList<FriendItem>();
+
+        for (int i=0; i<files.length; i++)
+        {
+            if (!files[i].getName().equalsIgnoreCase(MY_COLLECTION))
+                friendsList.add(new FriendItem(files[i].getName()));
+        }
+
+        return friendsList;
     }
 
     private static final String readFile(File file)
@@ -86,7 +104,7 @@ public class FileHelper {
 
         boolean result = true;
         try {
-            FileOutputStream fout = new FileOutputStream(fileToWrite);
+            FileOutputStream fout = new FileOutputStream(fileToWrite,false);
             fout.write(dataToWrite.getBytes());
             result = true;
         } catch (FileNotFoundException e) {
