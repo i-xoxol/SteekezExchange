@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import steekezexchange.yaid.com.steekezexchange.R;
+import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
 import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 import steekezexchange.yaid.com.steekezexchange.utils.FileHelper;
 import steekezexchange.yaid.com.steekezexchange.utils.Parser;
@@ -34,10 +35,12 @@ public class LoadDataInteractorImpl implements LoadDataInteractor{
                    e.printStackTrace();
                }
 */
+               final ArrayList<FriendItem> friendsList = FileHelper.getFriendsList(ctx);
+
                ((Activity) ctx).runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
-                       listener.onFinished(FileHelper.MY_COLLECTION, myColletion, null);
+                       listener.onFinished(FileHelper.MY_COLLECTION, myColletion, friendsList);
                    }
                });
            }

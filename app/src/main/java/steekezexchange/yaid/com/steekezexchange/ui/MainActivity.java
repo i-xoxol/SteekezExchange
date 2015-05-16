@@ -1,14 +1,18 @@
 package steekezexchange.yaid.com.steekezexchange.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -133,6 +137,10 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.action_add_friend)
+        {
+            showAddDialog();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -166,6 +174,14 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
                 collectionFragment.showCollection(collectionName, (ArrayList<SteekezItem>) myCollection);
             else
                 collectionFragment.prepareData(collectionName,(ArrayList<SteekezItem>) myCollection);
+
+        if(friendsListFragment!=null)
+        {
+            friendsListFragment.prepareData((ArrayList<FriendItem>) items);
+            if(friendsListFragment.isAdded())
+                friendsListFragment.showList();
+        }
+
     }
 
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
@@ -206,5 +222,38 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
             return null;
         }
 
+    }
+
+    private void showAddDialog()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(getString(R.string.add_dialog_title));
+        alert.setMessage(getString(R.string.add_dialog_message));
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        alert.setView(input);
+
+        alert.setPositiveButton(getString(R.string.add_dialog_but_add), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+
+                ArrayList<FriendItem> friendsList = (ArrayList<FriendItem>) friendsListFragment.getFriendsList();
+                friendsList.add(new FriendItem(value));
+                FileHelper.writeFile(MainActivity.this, value, "jjj");
+                friendsListFragment.prepareData(friendsList);
+                friendsListFragment.showList();
+            }
+        });
+
+        alert.setNegativeButton(getString(R.string.add_dialog_but_cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 }

@@ -9,4 +9,9 @@
     <string name="tab_one">Моя колекція</string>
     <string name="tab_two">Мої друзі</string>
 
+    <string name="add_dialog_title">Додати друга</string>
+    <string name="add_dialog_message">Введіть його пошту</string>
+    <string name="add_dialog_but_add">ДОДАТИ</string>
+    <string name="add_dialog_but_cancel">ВІДМІНА</string>
+
 </resources>

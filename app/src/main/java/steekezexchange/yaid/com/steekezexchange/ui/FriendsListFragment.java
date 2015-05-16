@@ -38,12 +38,30 @@ public class FriendsListFragment extends Fragment {
 
     private void initViews(View rootView){
         lvFriends = (ListView)rootView.findViewById(R.id.lvFriends);
-
+/*
         //FOR TEST
         testFriends();
-
+*/
+        if(friendsList==null)
+            friendsList = new ArrayList<FriendItem>();
         FriendsListAdapter adapter = new FriendsListAdapter(getActivity(),friendsList);
         lvFriends.setAdapter(adapter);
+
+    }
+
+    public void prepareData(ArrayList<FriendItem> friendList)
+    {
+        this.friendsList = friendList;
+    }
+
+    public List<FriendItem> getFriendsList()
+    {
+        return friendsList;
+    }
+
+    public void showList()
+    {
+        ((FriendsListAdapter)lvFriends.getAdapter()).notifyDataSetChanged();
     }
 
     private void testFriends(){
