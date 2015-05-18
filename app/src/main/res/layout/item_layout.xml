@@ -22,12 +22,13 @@
         android:id="@+id/tvQuantity"
         android:layout_gravity="center_horizontal" />
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ivItem"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/i1" />
 

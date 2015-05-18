@@ -2,8 +2,9 @@ package steekezexchange.yaid.com.steekezexchange.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.GridLayout;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,11 +19,12 @@ public class ItemView extends LinearLayout {
     boolean touchOn;
     boolean mDownTouch = false;
 
-    private ImageView ivItem;
+    private ImageButton ibItem;
     private TextView tvName, tvQuant, tvNum;
     private int num,quantity;
     private String name;
     private SteekezItem item;
+    private int imageResource;
 
     private int size = 0;
 
@@ -47,7 +49,7 @@ public class ItemView extends LinearLayout {
         tvName = (TextView)findViewById(R.id.tvItemName);
         tvQuant = (TextView)findViewById(R.id.tvQuantity);
         tvNum = (TextView)findViewById(R.id.tvNum);
-        ivItem = (ImageView)findViewById(R.id.ivItem);
+        ibItem = (ImageButton)findViewById(R.id.ivItem);
     }
 
     public ItemView (Context context, int size, int image, SteekezItem item)
@@ -75,7 +77,7 @@ public class ItemView extends LinearLayout {
         tvName = (TextView)this.findViewById(R.id.tvItemName);
         tvQuant = (TextView)this.findViewById(R.id.tvQuantity);
         tvNum = (TextView)this.findViewById(R.id.tvNum);
-        ivItem = (ImageView)findViewById(R.id.ivItem);
+        ibItem = (ImageButton)findViewById(R.id.ivItem);
 
         tvName.setText(name);
         if(quantity>1)
@@ -83,8 +85,21 @@ public class ItemView extends LinearLayout {
         else
             tvQuant.setText("");
         tvNum.setText(Integer.toString(num));
-
-        ivItem.setImageResource(image);
+        imageResource = image;
+        ibItem.setImageResource(image);
+        ibItem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ItemView.this.callOnClick();
+            }
+        });
+        ibItem.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ItemView.this.performLongClick();
+                return false;
+            }
+        });
 
     }
 
@@ -126,4 +141,15 @@ public class ItemView extends LinearLayout {
     public void setItem(SteekezItem item) {
         this.item = item;
     }
+/*
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
+            ivItem.setImageResource(android.R.drawable.ic_delete);
+        else if(event.getAction() == MotionEvent.ACTION_UP)
+            ivItem.setImageResource(imageResource);
+        return super.onTouchEvent(event);
+    }
+*/
+
 }
