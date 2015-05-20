@@ -93,11 +93,7 @@ public class CollectionFragment extends Fragment{
     private View.OnClickListener itemClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((ItemView)v).setQuantity(((ItemView) v).getQuantity() + 1);
-            SteekezItem item = ((ItemView)v).getItem();
-            int index = steekezArray.indexOf(item);
-            item.setQuantity(item.getQuantity() + 1);
-            steekezArray.set(index, item);
+            setSteekezQuantity((ItemView) v, ((ItemView) v).getQuantity() + 1);
             //FileHelper.writeMyCollection(getActivity(),Parser.getStringData("i@i.ua",steekezArray));
         }
     };
@@ -172,7 +168,7 @@ public class CollectionFragment extends Fragment{
 
         if(v instanceof ItemView)
         {
-            menu.add(Menu.NONE, CM_DECR_ID, Menu.NONE, R.string.friends_list_delete_context);
+            menu.add(Menu.NONE, CM_DECR_ID, Menu.NONE, R.string.steekez_decr_context);
             //AdapterView.AdapterContextMenuInfo aMenuInfo = new AdapterView.AdapterContextMenuInfo(v,0,((ItemView)v).getNum());
             //menuInfo=aMenuInfo;
             //aMenuInfo.targetView = v;
@@ -192,9 +188,11 @@ public class CollectionFragment extends Fragment{
                 //String name = ((ItemView)info.targetView).getName();
                 //Toast.makeText(getActivity(),name,Toast.LENGTH_SHORT).show();
                 if(info!=null) {
-                    View v = info.targetView;
-                    String name = ((ItemView)info.targetView).getName();
-                    Toast.makeText(getActivity(),name,Toast.LENGTH_SHORT).show();
+                    ItemView v = (ItemView)info.targetView;
+                    if(v.getQuantity()>0)
+                        setSteekezQuantity(v, v.getQuantity()-1);
+                    //String name = ((ItemView)info.targetView).getName();
+                    //Toast.makeText(getActivity(),name,Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:
@@ -202,4 +200,14 @@ public class CollectionFragment extends Fragment{
         }
 
     }
+
+    private void setSteekezQuantity(ItemView v, int quantity)
+    {
+        v.setQuantity(quantity);
+        SteekezItem item = v.getItem();
+        int index = steekezArray.indexOf(item);
+        item.setQuantity(quantity);
+        steekezArray.set(index, item);
+    }
+
 }
