@@ -24,7 +24,7 @@ public class ItemView extends LinearLayout {
     private int num,quantity;
     private String name;
     private SteekezItem item;
-    private int imageResource;
+    private int imageResource, imageFrozenRes;
 
     private int size = 0;
 
@@ -52,13 +52,13 @@ public class ItemView extends LinearLayout {
         ibItem = (ImageButton)findViewById(R.id.ivItem);
     }
 
-    public ItemView (Context context, int size, int image, SteekezItem item)
+    public ItemView (Context context, int size, int image, int imageFrozen, SteekezItem item)
     {
-        this(context,size,0,image,item.getName(),item.getId(),item.getQuantity());
+        this(context,size,0,image, imageFrozen, item.getName(),item.getId(),item.getQuantity());
         this.item = item;
     }
 
-    public ItemView (Context context, int size, int margins, int image, String name, int num, int quantity) {
+    public ItemView (Context context, int size, int margins, int image, int imageFrozen,String name, int num, int quantity) {
         super(context);
 
         inflate(getContext(), R.layout.item_layout, this);
@@ -86,20 +86,27 @@ public class ItemView extends LinearLayout {
             tvQuant.setText("");
         tvNum.setText(Integer.toString(num));
         imageResource = image;
-        ibItem.setImageResource(image);
+        imageFrozenRes = imageFrozen;
+        if(quantity==0)
+            ibItem.setImageResource(imageFrozen);
+        else
+            ibItem.setImageResource(image);
+
         ibItem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ItemView.this.callOnClick();
             }
         });
+
         ibItem.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ItemView.this.performLongClick();
-                return false;
+                return ItemView.this.performLongClick();
+                //return true;
             }
         });
+
 
     }
 
@@ -119,6 +126,12 @@ public class ItemView extends LinearLayout {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+
+        if(quantity==0)
+            ibItem.setImageResource(imageFrozenRes);
+        else
+            ibItem.setImageResource(imageResource);
+
         if(quantity>1)
             tvQuant.setText("x"+quantity);
         else

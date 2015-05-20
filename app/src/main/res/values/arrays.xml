@@ -27,6 +27,33 @@
         <item>@drawable/i24</item>
     </array>
 
+    <array name="steekezfrozenimages">
+        <item>@drawable/if1</item>
+        <item>@drawable/if2</item>
+        <item>@drawable/if3</item>
+        <item>@drawable/if4</item>
+        <item>@drawable/if5</item>
+        <item>@drawable/if6</item>
+        <item>@drawable/if7</item>
+        <item>@drawable/if8</item>
+        <item>@drawable/if9</item>
+        <item>@drawable/if10</item>
+        <item>@drawable/if11</item>
+        <item>@drawable/if12</item>
+        <item>@drawable/if13</item>
+        <item>@drawable/if14</item>
+        <item>@drawable/if15</item>
+        <item>@drawable/if16</item>
+        <item>@drawable/if17</item>
+        <item>@drawable/if18</item>
+        <item>@drawable/if19</item>
+        <item>@drawable/if20</item>
+        <item>@drawable/if21</item>
+        <item>@drawable/if22</item>
+        <item>@drawable/if23</item>
+        <item>@drawable/if24</item>
+    </array>
+
     <array name="steekez_name">
         <item>БОРЩ</item>
         <item>КЛУНІ</item>
