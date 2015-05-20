@@ -2,7 +2,9 @@ package steekezexchange.yaid.com.steekezexchange.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ContextMenu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -31,6 +33,11 @@ public class ItemView extends LinearLayout {
     public ItemView(Context context) {
         super(context);
         init();
+    }
+
+    @Override
+    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+        return new AdapterView.AdapterContextMenuInfo(this,num,num);
     }
 
     public ItemView(Context context, AttributeSet attrs) {

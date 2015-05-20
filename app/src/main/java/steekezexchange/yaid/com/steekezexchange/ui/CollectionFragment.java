@@ -154,9 +154,10 @@ public class CollectionFragment extends Fragment{
                     return v.showContextMenu();
                 }
             });
+
+            registerForContextMenu(v);
             myGridLayout.addView(v);
         }
-        //registerForContextMenu(myGridLayout);
     }
 
     @Override
@@ -169,11 +170,13 @@ public class CollectionFragment extends Fragment{
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        if (v.getId()==myGridLayout.getId())
+        if(v instanceof ItemView)
         {
             menu.add(Menu.NONE, CM_DECR_ID, Menu.NONE, R.string.friends_list_delete_context);
-            AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            ItemView itemView = (ItemView) aMenuInfo.targetView;//This is how I get a grip on the view that got long pressed.
+            //AdapterView.AdapterContextMenuInfo aMenuInfo = new AdapterView.AdapterContextMenuInfo(v,0,((ItemView)v).getNum());
+            //menuInfo=aMenuInfo;
+            //aMenuInfo.targetView = v;
+            //((AdapterView.AdapterContextMenuInfo) menuInfo).targetView = v;
         }
     }
 
@@ -188,7 +191,11 @@ public class CollectionFragment extends Fragment{
                 //FriendItem friendItem = (FriendItem) myGridLayout.getvi.getItemAtPosition(info.position);
                 //String name = ((ItemView)info.targetView).getName();
                 //Toast.makeText(getActivity(),name,Toast.LENGTH_SHORT).show();
-                View v = info.targetView;
+                if(info!=null) {
+                    View v = info.targetView;
+                    String name = ((ItemView)info.targetView).getName();
+                    Toast.makeText(getActivity(),name,Toast.LENGTH_SHORT).show();
+                }
                 return true;
             default:
                 return super.onContextItemSelected(item);
