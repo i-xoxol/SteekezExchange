@@ -57,7 +57,7 @@ android:background="@drawable/gradient">
         android:layout_below="@+id/linearLayout"
         android:src="@drawable/new_background" />
 
-    <GridLayout
+    <steekezexchange.yaid.com.steekezexchange.ui.HeaderGridView
         android:id="@+id/myGridLO"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,7 +65,7 @@ android:background="@drawable/gradient">
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:animateLayoutChanges="true">
-    </GridLayout>
+    </steekezexchange.yaid.com.steekezexchange.ui.HeaderGridView>
 
 
 

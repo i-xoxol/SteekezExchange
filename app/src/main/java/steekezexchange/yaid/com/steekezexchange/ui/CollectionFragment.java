@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import steekezexchange.yaid.com.steekezexchange.R;
+import steekezexchange.yaid.com.steekezexchange.adapters.SteekezAdapter;
 import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
 import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 
@@ -48,9 +50,10 @@ public class CollectionFragment extends Fragment{
     private String collectionName;
 
     //ItemView[] myViews = new ItemView[ITEMS_QUANTITY];
-    GridLayout myGridLayout;
+    HeaderGridView myGridLayout;
 
     ArrayList<SteekezItem> steekezArray;
+    SteekezAdapter steekezAdapter;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -86,8 +89,11 @@ public class CollectionFragment extends Fragment{
 
     private void initView(View rootView)
     {
-        myGridLayout = (GridLayout) rootView.findViewById(R.id.myGridLO);
-        myGridLayout.setColumnCount(ITEMS_IN_ROW);
+        myGridLayout = (HeaderGridView) rootView.findViewById(R.id.myGridLO);
+        //myGridLayout.setColumnCount(ITEMS_IN_ROW);
+        myGridLayout.setNumColumns(ITEMS_IN_ROW);
+        View headerView = View.inflate(getActivity(),R.layout.header_layout,null);
+        myGridLayout.addHeaderView(headerView,null,false);
     }
 
     private View.OnClickListener itemClick = new View.OnClickListener() {
@@ -114,6 +120,14 @@ public class CollectionFragment extends Fragment{
     }
 
     public void showCollection() {
+        TypedArray imgs = getResources().obtainTypedArray(R.array.steekezimages);
+        TypedArray imgsFrozen = getResources().obtainTypedArray(R.array.steekezfrozenimages);
+
+        steekezAdapter = new SteekezAdapter(getActivity(), steekezArray, imgs,imgsFrozen);
+        myGridLayout.setAdapter(steekezAdapter);
+    }
+/*
+    public void showCollection() {
         // Get density of the screen for correct convection into pixels
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         final float scale = displayMetrics.density;
@@ -126,20 +140,6 @@ public class CollectionFragment extends Fragment{
         TypedArray imgs = getResources().obtainTypedArray(R.array.steekezimages);
         TypedArray imgsFrozen = getResources().obtainTypedArray(R.array.steekezfrozenimages);
 
-/*
-        String myData = FileHelper.readMyCollectionFile(getActivity());
-
-        if (myData==null || myData.length()==0)
-        {
-            String[] names = getResources().getStringArray(R.array.steekez_name);
-            steekezArray = new ArrayList<SteekezItem>();
-
-            for (int i=0; i<names.length; i++)
-                steekezArray.add(new SteekezItem(i+1,1,names[i]));
-        }
-        else
-            steekezArray = Parser.parseFile(myData);
-*/
         myGridLayout.removeAllViews();
         for (int i=0; i<ITEMS_QUANTITY; i++)
         {
@@ -158,7 +158,7 @@ public class CollectionFragment extends Fragment{
         }
         //registerForContextMenu(myGridLayout);
     }
-
+*/
     @Override
     public void onPause() {
         super.onPause();
