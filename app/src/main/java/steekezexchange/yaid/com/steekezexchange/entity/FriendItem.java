@@ -5,6 +5,21 @@ package steekezexchange.yaid.com.steekezexchange.entity;
  */
 public class FriendItem {
     private String email;
+    private boolean interesting;
+
+    public boolean isInteresting() {
+        return interesting;
+    }
+
+    public void setInteresting(boolean interesting) {
+        this.interesting = interesting;
+    }
+
+    public FriendItem(String email, boolean interesting) {
+
+        this.email = email;
+        this.interesting = interesting;
+    }
 
     public FriendItem(String email) {
         this.email = email;

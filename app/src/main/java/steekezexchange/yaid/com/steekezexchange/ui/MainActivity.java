@@ -187,6 +187,16 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
     }
 
     @Override
+    public void updateFriendItems(List<FriendItem> items) {
+
+    }
+
+    @Override
+    public void updateFriendItem(FriendItem item) {
+
+    }
+
+    @Override
     public void deleteFriend(String name) {
         ArrayList<FriendItem> friendsList = (ArrayList<FriendItem>) friendsListFragment.getFriendsList();
         friendsList.remove(new FriendItem(name));

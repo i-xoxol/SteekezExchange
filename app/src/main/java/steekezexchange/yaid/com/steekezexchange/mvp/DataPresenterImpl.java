@@ -10,7 +10,7 @@ import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 /**
  * Created by ikhokhlov on 5/14/2015.
  */
-public class DataPresenterImpl implements CollectionPresenter, DataFinishedListener {
+public class DataPresenterImpl implements DataPresenter, DataFinishedListener {
 
     private MainView mainView;
     private Context context;
@@ -26,6 +26,11 @@ public class DataPresenterImpl implements CollectionPresenter, DataFinishedListe
     public void onLoad() {
         mainView.showProgress();
         loadDataInteractor.loadItemsFromInternalStorage(this);
+    }
+
+    @Override
+    public void onLoadFriendsCollection() {
+
     }
 
     @Override

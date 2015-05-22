@@ -15,4 +15,8 @@ public interface MainView {
     public void hideProgress();
 
     public void setItems(String collectionName, List<SteekezItem> myCollection, List<FriendItem> items);
+
+    public void updateFriendItems(List<FriendItem> items);
+
+    public void updateFriendItem(FriendItem item);
 }
