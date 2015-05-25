@@ -24,6 +24,7 @@ import steekezexchange.yaid.com.steekezexchange.entity.FriendItem;
 import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
 import steekezexchange.yaid.com.steekezexchange.mvp.CollectionPresenter;
 import steekezexchange.yaid.com.steekezexchange.mvp.CollectionView;
+import steekezexchange.yaid.com.steekezexchange.mvp.DataPresenter;
 import steekezexchange.yaid.com.steekezexchange.mvp.DataPresenterImpl;
 import steekezexchange.yaid.com.steekezexchange.mvp.MainView;
 import steekezexchange.yaid.com.steekezexchange.utils.FileHelper;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity implements CollectionFragment.SaveDat
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
     private ProgressBar progressBar;
-    private CollectionPresenter dataPresenter;
+    private DataPresenter dataPresenter;
     private CollectionFragment collectionFragment;
     private FriendsListFragment friendsListFragment;
 

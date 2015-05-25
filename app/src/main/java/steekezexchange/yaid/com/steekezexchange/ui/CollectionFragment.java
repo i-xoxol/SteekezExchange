@@ -28,7 +28,7 @@ import steekezexchange.yaid.com.steekezexchange.entity.SteekezItem;
  */
 public class CollectionFragment extends Fragment{
 
-    private final static int CM_DECR_ID = 1;
+    private final static int CM_DECR_ID = 11;
 
     public interface SaveDataListener {
         public void saveData(String collectionName, ArrayList<SteekezItem> collection);
